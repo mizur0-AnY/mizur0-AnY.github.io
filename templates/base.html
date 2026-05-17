@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} — Робототехника</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="{{ url_for('index') }}">Robo<span>Lab</span></a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему">◐</button>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Главная</a>
+        <a href="{{ url_for('types') }}" {% if request.endpoint == 'types' %}class="active"{% endif %}>Типы</a>
+        <a href="{{ url_for('applications') }}" {% if request.endpoint == 'applications' %}class="active"{% endif %}>Применение</a>
+        <a href="{{ url_for('basics') }}" {% if request.endpoint == 'basics' %}class="active"{% endif %}>Основы</a>
+        <a href="{{ url_for('interactive') }}" {% if request.endpoint == 'interactive' %}class="active"{% endif %}>Интерактив</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap main-content">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>RoboLab</p>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

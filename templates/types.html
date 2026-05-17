@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Типы роботов</h1>
+
+<div class="slider-block">
+  <label for="typeSlider" class="slider-label">Категория</label>
+  <input type="range" id="typeSlider" min="0" max="3" value="0" class="type-slider">
+  <div id="typeCard" class="type-card"></div>
+  <script type="application/json" id="types-json">
+[
+  {"title": "Стационарные манипуляторы", "text": "Рабочие ячейки, сварка, сборка. Высокая точность и повторяемость траекторий."},
+  {"title": "Мобильные роботы", "text": "AGV, дроны, роверы. Акцент на локализации, карте и планировании пути."},
+  {"title": "Коллаборативные (cobot)", "text": "Работа рядом с человеком: ограничение силы, зрение, безопасные скорости."},
+  {"title": "Сервис и быт", "text": "Пылесосы, доставка, ассистенты. Упор на UX, надёжность и стоимость."}
+]
+  </script>
+</div>
+
+<ul class="topic-list">
+  <li><strong>Промышленные</strong> — цикл «захват — перемещение — укладка», часто с конвейером и PLC.</li>
+  <li><strong>Исследовательские</strong> — открытая архитектура, ROS, эксперименты с алгоритмами.</li>
+  <li><strong>Образовательные</strong> — LEGO, Arduino, STM32: быстрый цикл «идея — прототип — тест».</li>
+</ul>
+{% endblock %}

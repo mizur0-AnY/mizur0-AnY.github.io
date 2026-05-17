@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>Робототехника рядом</h1>
+    <p class="lead">
+      От промышленных манипуляторов до домашних наборов: здесь коротко о том,
+      как устроены роботы, где они применяются и с чего начать изучение.
+    </p>
+    <a class="btn primary" href="{{ url_for('interactive') }}">Попробовать интерактив</a>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="robot-scene">
+      <div class="robot-base"></div>
+      <div class="robot-arm">
+        <span class="joint j1"></span>
+        <span class="joint j2"></span>
+        <span class="gripper"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grid cards">
+  <article class="card">
+    <h2>Что такое робот</h2>
+    <p>
+      Робот — это механическая система, которая воспринимает окружение,
+      принимает решения и действует, чтобы достичь цели. Ключевые части:
+      сенсоры, вычислитель и приводы.
+    </p>
+  </article>
+  <article class="card">
+    <h2>С чего начать</h2>
+    <p>
+      Схема «датчик — контроллер — мотор», простой макет и постепенное усложнение:
+      обратная связь, навигация, программирование траекторий.
+    </p>
+  </article>
+  <article class="card">
+    <h2>Дальше по разделам</h2>
+    <ul class="inline-links">
+      <li><a href="{{ url_for('types') }}">типы роботов</a></li>
+      <li><a href="{{ url_for('applications') }}">отрасли</a></li>
+      <li><a href="{{ url_for('basics') }}">основы схем</a></li>
+    </ul>
+  </article>
+</section>
+{% endblock %}

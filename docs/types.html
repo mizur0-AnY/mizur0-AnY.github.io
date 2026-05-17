@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Типы роботов — Робототехника</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+<body data-deploy="static">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="../index.html">Robo<span>Lab</span></a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему">◐</button>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="../index.html" >Главная</a>
+        <a href="types.html" class="active">Типы</a>
+        <a href="applications.html" >Применение</a>
+        <a href="basics.html" >Основы</a>
+        <a href="interactive.html" >Интерактив</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap main-content">
+    
+<h1>Типы роботов</h1>
+<div class="slider-block">
+  <label for="typeSlider" class="slider-label">Категория</label>
+  <input type="range" id="typeSlider" min="0" max="3" value="0" class="type-slider">
+  <div id="typeCard" class="type-card"></div>
+  <script type="application/json" id="types-json">
+[
+  {"title": "Стационарные манипуляторы", "text": "Рабочие ячейки, сварка, сборка. Высокая точность и повторяемость траекторий."},
+  {"title": "Мобильные роботы", "text": "AGV, дроны, роверы. Акцент на локализации, карте и планировании пути."},
+  {"title": "Коллаборативные (cobot)", "text": "Работа рядом с человеком: ограничение силы, зрение, безопасные скорости."},
+  {"title": "Сервис и быт", "text": "Пылесосы, доставка, ассистенты. Упор на UX, надёжность и стоимость."}
+]
+  </script>
+</div>
+
+<ul class="topic-list">
+  <li><strong>Промышленные</strong> — цикл «захват — перемещение — укладка», часто с конвейером и PLC.</li>
+  <li><strong>Исследовательские</strong> — открытая архитектура, ROS, эксперименты с алгоритмами.</li>
+  <li><strong>Образовательные</strong> — LEGO, Arduino, STM32: быстрый цикл «идея — прототип — тест».</li>
+</ul>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>RoboLab</p>
+    </div>
+  </footer>
+  <script src="../static/script.js"></script>
+  
+</body>
+</html>

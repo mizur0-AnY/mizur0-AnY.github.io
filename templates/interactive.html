@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Интерактив</h1>
+
+<section class="panel">
+  <h2>Подбор траектории обучения</h2>
+  <form id="learningForm" method="post" action="{{ url_for('interactive') }}" class="stack-form">
+    <label>
+      Имя
+      <input type="text" name="name" maxlength="80" placeholder="Как к вам обращаться" value="{{ request.form.get('name', '') }}">
+    </label>
+    <label>
+      Интерес
+      <select name="focus">
+        <option value="manipulators" {% if request.form.get('focus', 'general') == 'manipulators' %}selected{% endif %}>Манипуляторы</option>
+        <option value="mobile" {% if request.form.get('focus', 'general') == 'mobile' %}selected{% endif %}>Мобильные роботы</option>
+        <option value="humanoid" {% if request.form.get('focus', 'general') == 'humanoid' %}selected{% endif %}>Гуманоиды / сервис</option>
+        <option value="research" {% if request.form.get('focus', 'general') == 'research' %}selected{% endif %}>Исследования и ИИ</option>
+        <option value="general" {% if request.form.get('focus', 'general') == 'general' %}selected{% endif %}>Общий обзор</option>
+      </select>
+    </label>
+    <label>
+      Уровень
+      <select name="level">
+        <option value="beginner" {% if request.form.get('level', 'beginner') == 'beginner' %}selected{% endif %}>Новичок</option>
+        <option value="school" {% if request.form.get('level', 'beginner') == 'school' %}selected{% endif %}>Школа / кружок</option>
+        <option value="hobby" {% if request.form.get('level', 'beginner') == 'hobby' %}selected{% endif %}>Хобби-инженер</option>
+        <option value="pro" {% if request.form.get('level', 'beginner') == 'pro' %}selected{% endif %}>Продвинутый</option>
+      </select>
+    </label>
+    <button type="submit" class="btn primary">Получить совет</button>
+  </form>
+  {% if result %}
+  <div class="result-box" role="status">
+    <p><strong>{{ result.greeting }}</strong></p>
+    <p>{{ result.path }}</p>
+  </div>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h2>Вопросы и ответы</h2>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>Какой привод чаще всего задаёт угол «как велели»?</summary>
+      <p class="faq-answer"><strong>Сервопривод с позиционным контуром.</strong> Он получает команду (угол или ширину импульса) и удерживает положение за счёт обратной связи. Шаговый мотор без датчика положения и DC-мотор «напрямую» такую точность обычно не дают.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Какой сенсор даёт плотное облако точек расстояний?</summary>
+      <p class="faq-answer"><strong>Лидыар (LIDAR).</strong> Он активно сканирует пространство лазером и строит карту дальностей. Ультразвуковой дальномер с одним лучом измеряет одно расстояние; потенциометр — угол, а не облако точек.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Какой регулятор часто используют для плавного следования за заданным значением (setpoint)?</summary>
+      <p class="faq-answer"><strong>PID-регулятор</strong> (пропорционально-интегрально-дифференциальный). Три составляющие — P, I и D — помогают быстро выйти на цель и без сильных колебаний. Только P-часть без интеграла часто даёт постоянную ошибку.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Чем отличается робот от простого автомата с таймером?</summary>
+      <p class="faq-answer">Робот <strong>реагирует на окружение</strong>: есть сенсоры, обработка данных и приводы, цель может меняться. Автомат по таймеру повторяет фиксированную программу без учёта того, что происходит вокруг.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Зачем роботу обратная связь (feedback)?</summary>
+      <p class="faq-answer">Без неё команда «поверни на 90°» не учитывает нагрузку, износ и проскальзывание. <strong>Обратная связь</strong> сравнивает желаемое и фактическое положение и корректирует управление — так точнее траектории и безопаснее движение.</p>
+    </details>
+  </div>
+</section>
+
+<section class="panel canvas-panel">
+  <h2>Мини-симуляция</h2>
+  <canvas id="followCanvas" width="420" height="220" aria-label="Симуляция"></canvas>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    var canvas = document.getElementById('followCanvas');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    var target = { x: w * 0.75, y: h * 0.35, r: 14, drag: false };
+    var bot = { x: w * 0.25, y: h * 0.65, s: 22, vx: 0, vy: 0 };
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--canvas-bg').trim() || '#1a2332';
+      ctx.fillRect(0, 0, w, h);
+      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--grid-line').trim() || 'rgba(255,255,255,0.06)';
+      for (var g = 0; g < w; g += 28) { ctx.beginPath(); ctx.moveTo(g, 0); ctx.lineTo(g, h); ctx.stroke(); }
+      for (var gy = 0; gy < h; gy += 28) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+      ctx.fillStyle = '#5ad8a6';
+      ctx.fillRect(bot.x - bot.s / 2, bot.y - bot.s / 2, bot.s, bot.s);
+      ctx.strokeStyle = '#e8ecf1';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(bot.x - bot.s / 2, bot.y - bot.s / 2, bot.s, bot.s);
+      ctx.beginPath();
+      ctx.arc(target.x, target.y, target.r, 0, Math.PI * 2);
+      ctx.fillStyle = '#ff9f43';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.stroke();
+    }
+
+    function loop() {
+      var ax = (target.x - bot.x) * 0.04;
+      var ay = (target.y - bot.y) * 0.04;
+      bot.vx += ax; bot.vy += ay;
+      bot.vx *= 0.88; bot.vy *= 0.88;
+      bot.x += bot.vx; bot.y += bot.vy;
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    function pos(e) {
+      var r = canvas.getBoundingClientRect();
+      var cx = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+      var cy = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
+      return { x: cx * (w / r.width), y: cy * (h / r.height) };
+    }
+
+    canvas.addEventListener('mousedown', function (e) {
+      var p = pos(e);
+      if (Math.hypot(p.x - target.x, p.y - target.y) < target.r + 8) target.drag = true;
+    });
+    window.addEventListener('mouseup', function () { target.drag = false; });
+    canvas.addEventListener('mousemove', function (e) {
+      if (!target.drag) return;
+      var p = pos(e);
+      target.x = Math.max(target.r, Math.min(w - target.r, p.x));
+      target.y = Math.max(target.r, Math.min(h - target.r, p.y));
+    });
+    canvas.addEventListener('touchstart', function (e) {
+      var p = pos(e);
+      if (Math.hypot(p.x - target.x, p.y - target.y) < target.r + 12) { target.drag = true; e.preventDefault(); }
+    }, { passive: false });
+    canvas.addEventListener('touchmove', function (e) {
+      if (!target.drag) return;
+      e.preventDefault();
+      var p = pos(e);
+      target.x = Math.max(target.r, Math.min(w - target.r, p.x));
+      target.y = Math.max(target.r, Math.min(h - target.r, p.y));
+    }, { passive: false });
+    canvas.addEventListener('touchend', function () { target.drag = false; });
+
+    loop();
+  })();
+</script>
+{% endblock %}

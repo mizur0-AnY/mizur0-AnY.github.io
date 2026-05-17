@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Основы — Робототехника</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+<body data-deploy="static">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="../index.html">Robo<span>Lab</span></a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему">◐</button>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="../index.html" >Главная</a>
+        <a href="types.html" >Типы</a>
+        <a href="applications.html" >Применение</a>
+        <a href="basics.html" class="active">Основы</a>
+        <a href="interactive.html" >Интерактив</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap main-content">
+    
+<h1>Основы: сенсоры, приводы, контур</h1>
+<div class="chain" id="signalChain" role="group" aria-label="Цепочка сигнала">
+  <button type="button" class="chain-node" data-desc="Датчики: энкодеры, IMU, лидыар, камера, токовые шунты.">
+    Сенсоры
+  </button>
+  <span class="chain-arrow">→</span>
+  <button type="button" class="chain-node" data-desc="Фильтрация, калибровка, слияние данных (sensor fusion).">
+    Обработка
+  </button>
+  <span class="chain-arrow">→</span>
+  <button type="button" class="chain-node" data-desc="Микроконтроллер, одноплатник или ПК: PID, планировщик, ИИ.">
+    Контроллер
+  </button>
+  <span class="chain-arrow">→</span>
+  <button type="button" class="chain-node" data-desc="Моторы, редукторы, сервоприводы, пневматика — движение в мире.">
+    Приводы
+  </button>
+</div>
+<p id="chainHint" class="chain-hint muted"></p>
+
+<h2>Частые стартовые наборы</h2>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Платформа</th>
+      <th>Для чего</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Arduino / совместимые</td>
+      <td>Быстрые прототипы датчиков и приводов, обучение ШИМ и прерываниям.</td>
+    </tr>
+    <tr>
+      <td>Raspberry Pi</td>
+      <td>Камера, сеть, лёгкие нейросети на периферии «робота-головы».</td>
+    </tr>
+    <tr>
+      <td>STM32 / ESP32</td>
+      <td>Встраиваемые задачи с жёсткими сроками отклика и энергобюджетом.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>RoboLab</p>
+    </div>
+  </footer>
+  <script src="../static/script.js"></script>
+  
+</body>
+</html>

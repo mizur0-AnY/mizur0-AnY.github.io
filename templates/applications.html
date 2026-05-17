@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Применение робототехники</h1>
+
+<div class="tabs" role="tablist" aria-label="Отрасли">
+  <button type="button" class="tab active" role="tab" aria-selected="true" data-tab="mfg">Производство</button>
+  <button type="button" class="tab" role="tab" aria-selected="false" data-tab="med">Медицина</button>
+  <button type="button" class="tab" role="tab" aria-selected="false" data-tab="space">Космос и полевые работы</button>
+</div>
+<div class="tab-panels">
+  <div class="tab-panel active" id="panel-mfg" role="tabpanel">
+    <p>Машины с ЧПУ как родственники роботов; ячейки с зрением для подбора деталей;
+      паллетирование и упаковка силой манипуляторов.</p>
+  </div>
+  <div class="tab-panel" id="panel-med" role="tabpanel" hidden>
+    <p>Хирургические системы с телеоперацией, реабилитационные экзоскелеты,
+      логистика внутри больниц — автономная доставка проб и лекарств.</p>
+  </div>
+  <div class="tab-panel" id="panel-space" role="tabpanel" hidden>
+    <p>Роверы с долгим циклом разработки, манипуляторы на орбите, БПЛА для мониторинга
+      инфраструктуры и стихийных бедствий.</p>
+  </div>
+</div>
+
+<section class="callout">
+  <h2>Направления</h2>
+  <div class="chips" id="appChips">
+    <label><input type="checkbox" value="vision"> Зрение</label>
+    <label><input type="checkbox" value="control"> Управление</label>
+    <label><input type="checkbox" value="mech"> Механика</label>
+    <label><input type="checkbox" value="sw"> ПО и симуляция</label>
+  </div>
+  <p id="chipSummary" class="chip-summary muted"></p>
+</section>
+{% endblock %}

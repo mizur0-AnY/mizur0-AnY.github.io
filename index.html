@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная — Робототехника</title>
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body data-deploy="static">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="index.html">Robo<span>Lab</span></a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему">◐</button>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="index.html" class="active">Главная</a>
+        <a href="docs/types.html">Типы</a>
+        <a href="docs/applications.html">Применение</a>
+        <a href="docs/basics.html">Основы</a>
+        <a href="docs/interactive.html">Интерактив</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap main-content">
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Робототехника рядом</h1>
+    <p class="lead">
+      От промышленных манипуляторов до домашних наборов: здесь коротко о том,
+      как устроены роботы, где они применяются и с чего начать изучение.
+    </p>
+    <a class="btn primary" href="docs/interactive.html">Попробовать интерактив</a>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="robot-scene">
+      <div class="robot-base"></div>
+      <div class="robot-arm">
+        <span class="joint j1"></span>
+        <span class="joint j2"></span>
+        <span class="gripper"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grid cards">
+  <article class="card">
+    <h2>Что такое робот</h2>
+    <p>
+      Робот — это механическая система, которая воспринимает окружение,
+      принимает решения и действует, чтобы достичь цели. Ключевые части:
+      сенсоры, вычислитель и приводы.
+    </p>
+  </article>
+  <article class="card">
+    <h2>С чего начать</h2>
+    <p>
+      Схема «датчик — контроллер — мотор», простой макет и постепенное усложнение:
+      обратная связь, навигация, программирование траекторий.
+    </p>
+  </article>
+  <article class="card">
+    <h2>Дальше по разделам</h2>
+    <ul class="inline-links">
+      <li><a href="docs/types.html">типы роботов</a></li>
+      <li><a href="docs/applications.html">отрасли</a></li>
+      <li><a href="docs/basics.html">основы схем</a></li>
+    </ul>
+  </article>
+</section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>RoboLab</p>
+    </div>
+  </footer>
+  <script src="static/script.js"></script>
+
+</body>
+</html>
